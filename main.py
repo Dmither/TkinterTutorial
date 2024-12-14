@@ -1,3 +1,6 @@
 import tkinter as tk
 
-print(tk.TkVersion)
+window = tk.Tk()
+greeting = tk.Label(text="Python rocks!")
+greeting.pack()
+window.mainloop()

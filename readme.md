@@ -62,3 +62,56 @@ label = tk.Label(
 Атрибут `relief` створює рамку навколо віджета: tk.FLAT не має ефекту (стандарт), tk.SUNKEN - втоплення, tk.RAISED - підйом, tk.GROOVE - рів, tk.RIDGE - ребро.
 
 Іменування змінним доцільно давати з префіксом класу (lbl, btn, ent, txt, frm).
+
+## Controlling Layout with Geometry Managers
+
+Менеджер геометрії **.pack()** розміщує віджети у фрейм або вікно у вказаному порядку. За умовчуванням наступний об'єкт розміщується в найвищій позиції після попереднього і відцентровані.
+
+Параметр **fill** визначає напрямок заповнення: tk.X, tk.Y, tk.BOTH
+
+Параметр **side** визначає, з якого боку додається елемент: tk.TOP (за ум.), tk.BOTTOM, tk.LEFT, tk.RIGHT.
+
+Для tk.TOP, tk.BOTTOM працює tk.X; для tk.LEFT, tk.RIGHT - tk.Y.
+
+Параметр **expand=True** дає змогу розтягувати фрейми макету рівномірно у всі сторони разом з tk.BOTH. розтягує сусідні фрейми на однакову кількість пікселів.
+
+Параметри **padx** і **pady** додають відступи навколо віджета.
+
+```py
+frame1 = tk.Frame(master=window, width=200, height=100, bg="red")
+frame1.pack(fill=BOTH, side=LEFT, expand=True)
+frame2 = tk.Frame(master=window, width=200, width=100, bg="blue")
+frame2.pack(fill=BOTH, side=LEFT, expand=True)
+```
+
+Менеджер геометрії **.place()** розміщує віджети за абсолютними координатами, кожен наступний поверх попереднього.
+
+```py
+frame=tk.Frame(master=window, width=150, height=150)
+frame.pack()
+label = tk.Label(master=frame, text="Hello!")
+label.place(x=15, y=20)
+```
+
+Менеджер геометрії **.grid()** розділяє вікно або фрейм на рядки і стовпці, додає елемент у відповідну комірку по центру, кожен наступний поверх. Стовпці і рядки розтягуються під розмір найвищого/найширшого елемента.
+
+Параметри **row** і **column** визначають індекси комірки.
+
+Параметри **padx** і **pady** додають відступи навколо комірки.
+
+Параметр **sticky** приймає рядок і одною або кількома літерами (news, як на компасі), за якими розміщає віджет всередині комірки. Регістр і порядок не має значення.
+
+Завчасно для вікна та фрейма можна вказати мараметри рядка/стовпця методати **.columnconfigure()** та **.rowconfigure()**: приймає індекс, вагу (weight=, множник реакції на розтягнення), мінімальний розмір (minsize=)
+
+```py
+window.rowconfigure(0, minsize=50)
+window.columnfigure([0, 1, 2, 3], minsize=50)
+label1 = tk.Label(text="1", bg="black", fg="white")
+label2 = tk.Label(text="2", bg="black", fg="white")
+label3 = tk.Label(text="3", bg="black", fg="white")
+label4 = tk.Label(text="4", bg="black", fg="white")
+label1.grid(row=0, column=0)    # центр
+label2.grid(row=0, column=1, sticky="ew")   # горизонтально
+label3.grid(row=0, column=2, sticky="ns")   # вертикально
+label4.grid(row=0, column=3, sticky="news") # на всю комірку
+```

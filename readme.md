@@ -80,7 +80,7 @@ label = tk.Label(
 ```py
 frame1 = tk.Frame(master=window, width=200, height=100, bg="red")
 frame1.pack(fill=BOTH, side=LEFT, expand=True)
-frame2 = tk.Frame(master=window, width=200, width=100, bg="blue")
+frame2 = tk.Frame(master=window, width=200, height=100, bg="blue")
 frame2.pack(fill=BOTH, side=LEFT, expand=True)
 ```
 
@@ -115,3 +115,27 @@ label2.grid(row=0, column=1, sticky="ew")   # горизонтально
 label3.grid(row=0, column=2, sticky="ns")   # вертикально
 label4.grid(row=0, column=3, sticky="news") # на всю комірку
 ```
+
+## Making Applications Interactive
+
+Команда `window.mainloop()` запускає цикл подій. Він підтримує список подій і запускає обробник щоразу, коли до списку додається нова подія.
+
+Прив'язку вікна/віджета до події забезпечує `.bind()`. Приймає два аргументи: подію виду `"<event_name>"` та обробник (ім'я функції).
+
+```py
+def handle_keypress(event):
+    print(event.char)   # виводить натиснутий символ
+window.bind("<Key>", handle_keypress)   # зчитування клавіші
+```
+
+Події `"<Button-1>"`, `"<Button-2>"`, `"<Button-3>"` позначають натискання лівої, середньої та правої кнопки миші відповідно.
+
+Кнопки мають атрибут **.command**, який прив'язує функцію до події натискання лівою книпкою.
+
+```py
+def handler_click(): print("Clicked")
+btn_click = tk.Button(text="Click me!", command=handler_click)
+```
+
+Доступ до атрибутів віджетів можна отримати за допопмогою нотації словника: `old_value = lbl_1["text"]`, `lbl_1["text"] = new_value`
+
